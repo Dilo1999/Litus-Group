@@ -50,7 +50,9 @@ class SiteController extends Controller
 
     public function team()
     {
-        return view('site.team');
+        return view('site.team', [
+            'team' => SiteData::team(),
+        ]);
     }
 
     public function careers()
@@ -88,6 +90,7 @@ class SiteController extends Controller
             'email' => ['required', 'email', 'max:255'],
             'phone' => ['nullable', 'string', 'max:50'],
             'message' => ['required', 'string', 'max:5000'],
+            'company' => ['nullable', 'string', 'max:255'],
         ]);
 
         // Frontend-only: store/sending can be implemented later.

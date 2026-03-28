@@ -100,7 +100,7 @@
     </div>
   </section>
 
-  <section class="py-24 bg-white">
+  <section id="companies" class="py-24 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <x-site.motion class="text-center mb-16" variant="fade-up" :duration="800">
         <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Our Companies</h2>

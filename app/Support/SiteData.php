@@ -5,10 +5,20 @@ namespace App\Support;
 class SiteData
 {
     /**
-     * Note: the original reference frontend used embedded image assets for logos.
-     * Those assets were not present in the provided `src/` folder, so we render
-     * logo placeholders (initials) until real logo files are added to `public/`.
+     * Company logos live in `public/assets/logo/` (filenames may contain spaces).
      */
+    public static function companyLogoUrl(?string $basename): ?string
+    {
+        if ($basename === null || $basename === '') {
+            return null;
+        }
+        if (str_starts_with($basename, 'http://') || str_starts_with($basename, 'https://')) {
+            return $basename;
+        }
+
+        return asset('assets/logo/' . rawurlencode($basename));
+    }
+
     public static function companies(): array
     {
         return [
@@ -20,6 +30,8 @@ class SiteData
                 'description' => 'LITUS Group is a diversified business conglomerate with a strong presence across multiple sectors including hospitality, construction, automotive, technology, and trading.',
                 'category' => 'Corporate Headquarters',
                 'division' => 'corporate',
+                'logo' => 'LITUS Group - logos_Artboard 1 - LITUS Group.png',
+                'icon' => 'building2',
                 'hotline' => '+960 332 2288',
                 'email' => 'info@litusgroup.com',
                 'services' => [
@@ -46,6 +58,8 @@ class SiteData
                 'description' => 'LITUS Maldives delivers world-class resort and hotel operations, providing exceptional experiences for travelers seeking luxury and comfort in paradise.',
                 'category' => 'Hospitality',
                 'division' => 'logistics-shipping',
+                'logo' => 'LITUS Group - logos_Artboard 2 - LITUS Maldives.png',
+                'icon' => 'hotel',
                 'hotline' => '+960 332 2289',
                 'email' => 'info@litusmaldives.com',
                 'services' => [
@@ -72,6 +86,8 @@ class SiteData
                 'description' => 'LITUS Shipping provides comprehensive international freight and cargo services, ensuring reliable and efficient transportation solutions across global markets.',
                 'category' => 'Logistics',
                 'division' => 'logistics-shipping',
+                'logo' => 'LITUS Group - logos_Artboard 3 - LITUS Shipping.png',
+                'icon' => 'ship',
                 'hotline' => '+960 332 2290',
                 'email' => 'shipping@litusgroup.com',
                 'services' => [
@@ -98,6 +114,8 @@ class SiteData
                 'description' => 'LITUS Automobiles offers premium vehicle sales and distribution, bringing the worlds leading automotive brands to the Maldives market.',
                 'category' => 'Automotive',
                 'division' => 'automotive',
+                'logo' => 'LITUS Group - logos_Artboard 4 - LITUS Automobiles.png',
+                'icon' => 'car',
                 'hotline' => '+960 332 2291',
                 'email' => 'sales@litusauto.com',
                 'services' => [
@@ -124,6 +142,8 @@ class SiteData
                 'description' => 'LITUS Service Center provides expert vehicle maintenance and repair services, ensuring your vehicle performs at its best.',
                 'category' => 'Automotive Services',
                 'division' => 'automotive',
+                'logo' => 'LITUS Group - logos_Artboard 5 - LITUS Service Center.png',
+                'icon' => 'wrench',
                 'hotline' => '+960 332 2292',
                 'email' => 'service@litusauto.com',
                 'services' => [
@@ -149,6 +169,8 @@ class SiteData
                 'description' => 'LITUS Parts supplies genuine automotive parts and accessories, ensuring quality and reliability for all your vehicle needs.',
                 'category' => 'Automotive Parts',
                 'division' => 'automotive',
+                'logo' => 'LITUS Group - logos_Artboard 6 - LITUS Parts.png',
+                'icon' => 'package',
                 'hotline' => '+960 332 2293',
                 'email' => 'parts@litusauto.com',
                 'services' => [
@@ -175,6 +197,8 @@ class SiteData
                 'description' => 'LITUS General Trading offers comprehensive import and export trading solutions, connecting businesses with global markets.',
                 'category' => 'Trading',
                 'division' => 'trading',
+                'logo' => 'LITUS Group - logos_Artboard 7 - LITUS General Trading.png',
+                'icon' => 'shopping-bag',
                 'hotline' => '+960 332 2294',
                 'email' => 'trading@litusgroup.com',
                 'services' => [
@@ -200,6 +224,8 @@ class SiteData
                 'description' => 'LITUS Connect delivers advanced connectivity and network solutions, empowering businesses with cutting-edge technology.',
                 'category' => 'Technology',
                 'division' => 'technology-retail',
+                'logo' => 'LITUS Group - logos_Artboard 8 - LITUS Connect.png',
+                'icon' => 'network',
                 'hotline' => '+960 332 2295',
                 'email' => 'connect@litusgroup.com',
                 'services' => [
@@ -226,6 +252,8 @@ class SiteData
                 'description' => 'LITUS Connect Office Tech provides advanced office technology and equipment solutions for modern businesses.',
                 'category' => 'Office Solutions',
                 'division' => 'technology-retail',
+                'logo' => 'LITUS Group - logos_Artboard 9 - LITUS Connect Office Tech.png',
+                'icon' => 'monitor',
                 'hotline' => '+960 332 2296',
                 'email' => 'officetech@litusgroup.com',
                 'services' => [
@@ -251,6 +279,8 @@ class SiteData
                 'description' => 'LITUS Constructions delivers excellence in commercial and residential construction, creating structures that stand the test of time.',
                 'category' => 'Construction',
                 'division' => 'construction',
+                'logo' => 'LITUS Group - logos_Artboard 10 - LITUS Construction.png',
+                'icon' => 'hard-hat',
                 'hotline' => '+960 332 2297',
                 'email' => 'construction@litusgroup.com',
                 'services' => [
@@ -276,6 +306,8 @@ class SiteData
                 'description' => 'Zaha Residence & Hotels offers luxury accommodations and residences, providing world-class comfort and exceptional service.',
                 'category' => 'Hospitality',
                 'division' => 'hospitality-lifestyle',
+                'logo' => 'LITUS Group - logos_Artboard 11 - ZAHA Residence & Hotels.png',
+                'icon' => 'hotel',
                 'hotline' => '+960 332 2298',
                 'email' => 'info@zahahotels.com',
                 'services' => [
@@ -301,6 +333,8 @@ class SiteData
                 'description' => 'Zaha Travels provides complete travel and tourism services, creating unforgettable experiences for every traveler.',
                 'category' => 'Travel & Tourism',
                 'division' => 'hospitality-lifestyle',
+                'logo' => 'LITUS Group - logos_Artboard 12 - ZAHA Travels.png',
+                'icon' => 'plane',
                 'hotline' => '+960 332 2299',
                 'email' => 'info@zahatravels.com',
                 'services' => [
@@ -326,6 +360,8 @@ class SiteData
                 'description' => 'Al Zaha General Trading specializes in wholesale and retail trading, delivering quality products across diverse categories.',
                 'category' => 'Trading',
                 'division' => 'trading',
+                'logo' => 'LITUS Group - logos_Artboard 12 - ZAHA Travels copy.png',
+                'icon' => 'store',
                 'hotline' => '+960 332 2300',
                 'email' => 'info@alzahatrading.com',
                 'services' => [
@@ -351,6 +387,8 @@ class SiteData
                 'description' => 'Favala Supply provides industrial and commercial supplies, supporting businesses with quality products and reliable service.',
                 'category' => 'Supply Chain',
                 'division' => 'trading',
+                'logo' => 'LITUS Group - logos_Artboard 15 - Favala supply.png',
+                'icon' => 'droplet',
                 'hotline' => '+960 332 2301',
                 'email' => 'info@favalasupply.com',
                 'services' => [
@@ -376,6 +414,8 @@ class SiteData
                 'description' => 'Favala Hardware offers quality hardware and building materials, providing everything you need for construction and renovation projects.',
                 'category' => 'Hardware',
                 'division' => 'trading',
+                'logo' => 'LITUS Group - logos_Artboard 14 - Favala hardware.png',
+                'icon' => 'hammer',
                 'hotline' => '+960 332 2302',
                 'email' => 'info@favalahardware.com',
                 'services' => [
@@ -401,6 +441,8 @@ class SiteData
                 'description' => 'Favala Paint delivers professional paint and coating solutions, bringing vibrant colors and lasting protection to every project.',
                 'category' => 'Paint & Coatings',
                 'division' => 'trading',
+                'logo' => 'LITUS Group - logos_Artboard 13 - Favala paint.png',
+                'icon' => 'paint-bucket',
                 'hotline' => '+960 332 2303',
                 'email' => 'info@favalapaint.com',
                 'services' => [
@@ -523,6 +565,43 @@ class SiteData
                 'title' => '25th Anniversary Celebration',
                 'date' => 'December 20, 2025',
                 'description' => 'A milestone celebration honoring 25 years of excellence, growth, and innovation.',
+            ],
+        ];
+    }
+
+    /** Leadership team — matches src/app/components/Team.tsx (figma placeholder → shared image URL). */
+    public static function team(): array
+    {
+        $image = 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=800&q=80';
+
+        return [
+            [
+                'name' => 'Mohamed Zahid',
+                'role' => 'Chief Executive Officer',
+                'bio' => "With exceptional vision and strategic leadership, Mohamed Zahid guides LITUS Group's overall direction and growth across all business divisions. His expertise in corporate governance and business development has positioned LITUS Group as a prominent conglomerate, driving innovation and excellence across 16 diverse subsidiaries.",
+                'expertise' => 'Strategic Leadership, Corporate Governance, Business Growth',
+                'image' => $image,
+            ],
+            [
+                'name' => 'Chamara Madusanka',
+                'role' => 'Chief Business Development Officer',
+                'bio' => "Chamara spearheads LITUS Group's business development initiatives, identifying new opportunities and forging strategic partnerships across multiple sectors. His innovative approach to market expansion and relationship building has been instrumental in the company's continuous growth and diversification.",
+                'expertise' => 'Business Development, Strategic Partnerships, Market Expansion',
+                'image' => $image,
+            ],
+            [
+                'name' => 'Ahmed Zahir',
+                'role' => 'General Manager, LITUS Automobiles',
+                'bio' => 'Ahmed leads LITUS Automobiles with deep industry expertise and a customer-centric approach. His operational excellence and market knowledge have established LITUS Automobiles as a trusted name in the automotive sector, delivering premium brands and exceptional service to customers.',
+                'expertise' => 'Automotive Management, Operations Excellence, Customer Relations',
+                'image' => $image,
+            ],
+            [
+                'name' => 'Asif Rasheed',
+                'role' => 'Director - Sales & Marketing',
+                'bio' => "Asif drives LITUS Group's sales and marketing strategies with creativity and market insight. His comprehensive approach to brand building and customer engagement has elevated the group's market presence, ensuring consistent growth and strong brand recognition across all business divisions.",
+                'expertise' => 'Sales Strategy, Brand Marketing, Customer Engagement',
+                'image' => $image,
             ],
         ];
     }

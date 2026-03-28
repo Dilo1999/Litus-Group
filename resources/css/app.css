@@ -214,6 +214,16 @@
   animation: site-scroll-dot-bounce 2s ease-in-out infinite;
 }
 
+/* Our Companies: PageHero — on load (not scroll), matches reference initial: y 30, 0.8s */
+.site-our-companies-hero {
+  animation: site-fade-in-up 0.8s ease-out both;
+}
+
+/* Company detail hero — matches CompanyPage CompanyHero initial motion */
+.site-company-hero {
+  animation: site-fade-in-up 0.8s ease-out both;
+}
+
 @keyframes site-nav-link-in {
   from {
     opacity: 0;
@@ -261,12 +271,63 @@
   .site-hero-ctas,
   .site-scroll-indicator,
   .site-scroll-indicator__mouse,
+  .site-our-companies-hero,
+  .site-company-hero,
   .site-nav-links-stagger > a,
   .site-nav-links-stagger > div {
     animation: none !important;
   }
 
+  .site-our-companies-hero {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
   [data-motion] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  [data-companies-stagger] .site-companies-motion-division,
+  [data-companies-stagger] .site-companies-motion-card {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  [data-about-hero] .site-about-motion-left,
+  [data-about-hero] .site-about-motion-stat,
+  [data-about-hero] .site-about-motion-right,
+  [data-about-hero] .site-about-motion-hl,
+  [data-about-hero] .site-about-motion-cta,
+  [data-about-vision].site-about-motion-mission,
+  [data-about-vision].site-about-motion-vision {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  [data-team-page] .site-team-motion-header,
+  [data-team-page] .site-team-motion-card {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .site-company-hero {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  [data-company-detail] .site-company-motion-about-left,
+  [data-company-detail] .site-company-motion-about-right,
+  [data-company-detail] .site-company-motion-services-header,
+  [data-company-detail] .site-company-motion-service-card,
+  [data-company-detail] .site-company-motion-why-header,
+  [data-company-detail] .site-company-motion-why-card,
+  [data-company-detail] .site-company-motion-contact-left,
+  [data-company-detail] .site-company-motion-contact-right {
     opacity: 1 !important;
     transform: none !important;
     transition: none !important;
