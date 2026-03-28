@@ -7,6 +7,7 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
+  --site-mobile-nav-ink: #001a3d;
   --font-size: 16px;
   --background: #ffffff;
   --foreground: oklch(0.145 0 0);
@@ -126,6 +127,10 @@
 }
 
 @layer base {
+  [x-cloak] {
+    display: none !important;
+  }
+
   * {
     @apply border-border outline-ring/50;
   }
@@ -137,6 +142,10 @@
 
   html {
     font-size: var(--font-size);
+  }
+
+  html.site-mobile-menu-open {
+    overflow: hidden;
   }
 }
 
@@ -349,4 +358,5 @@
     transform: none !important;
     transition: none !important;
   }
+
 }
