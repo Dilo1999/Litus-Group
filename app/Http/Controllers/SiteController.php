@@ -57,7 +57,9 @@ class SiteController extends Controller
 
     public function careers()
     {
-        return view('site.careers');
+        return view('site.careers', [
+            'jobOpenings' => SiteData::careerOpenings(),
+        ]);
     }
 
     public function blogs()

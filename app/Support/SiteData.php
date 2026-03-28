@@ -575,6 +575,55 @@ class SiteData
         ];
     }
 
+    /** Job list — matches src/app/components/Careers.tsx jobOpenings. */
+    public static function careerOpenings(): array
+    {
+        return [
+            [
+                'title' => 'Senior Automotive Technician',
+                'company' => 'LITUS Service Center',
+                'location' => 'Maldives',
+                'type' => 'Full-time',
+                'department' => 'Automotive',
+            ],
+            [
+                'title' => 'Hotel Manager',
+                'company' => 'Zaha Residence & Hotels',
+                'location' => 'Maldives',
+                'type' => 'Full-time',
+                'department' => 'Hospitality',
+            ],
+            [
+                'title' => 'Network Engineer',
+                'company' => 'LITUS Connect',
+                'location' => 'Maldives',
+                'type' => 'Full-time',
+                'department' => 'Technology',
+            ],
+            [
+                'title' => 'Construction Project Manager',
+                'company' => 'LITUS Constructions',
+                'location' => 'Maldives',
+                'type' => 'Full-time',
+                'department' => 'Construction',
+            ],
+            [
+                'title' => 'Sales Executive',
+                'company' => 'LITUS Automobiles',
+                'location' => 'Maldives',
+                'type' => 'Full-time',
+                'department' => 'Sales',
+            ],
+            [
+                'title' => 'Logistics Coordinator',
+                'company' => 'LITUS Shipping',
+                'location' => 'Maldives',
+                'type' => 'Full-time',
+                'department' => 'Logistics',
+            ],
+        ];
+    }
+
     /** Leadership team — matches src/app/components/Team.tsx (figma placeholder → shared image URL). */
     public static function team(): array
     {

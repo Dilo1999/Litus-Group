@@ -100,45 +100,73 @@
     </div>
   </section>
 
-  <section id="companies" class="py-24 bg-white">
+  {{-- CompaniesOverview — matches HomePage.tsx (single useInView ref on header, shared isInView for grid + CTA) --}}
+  <section id="companies" class="py-24 bg-white" data-companies-overview x-data="{ companiesInView: false }">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <x-site.motion class="text-center mb-16" variant="fade-up" :duration="800">
+      <div
+        class="site-companies-overview-header text-center mb-16 transition-[opacity,transform] duration-[800ms] ease-out will-change-[opacity,transform]"
+        x-intersect.once.margin.-100px.-100px.-100px.-100px="companiesInView = true"
+        :class="companiesInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-[50px]'"
+      >
         <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Our Companies</h2>
         <p class="text-xl text-gray-600 max-w-2xl mx-auto">
           16 specialized companies delivering excellence across multiple industries
         </p>
-      </x-site.motion>
+      </div>
 
       <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-6 mb-12">
         @foreach($displayCompanies as $index => $company)
-          <x-site.motion :delay="$index * 50" :duration="500" variant="scale" class="h-full">
+          @php
+            $companyLogoSrc = \App\Support\SiteData::companyLogoUrl($company['logo'] ?? null);
+          @endphp
+          <div
+            class="site-companies-overview-card h-full transition-[opacity,transform] duration-500 ease-out will-change-[opacity,transform]"
+            style="transition-delay: {{ $index * 50 }}ms"
+            :class="companiesInView ? 'opacity-100 scale-100' : 'opacity-0 scale-90'"
+          >
             <a href="{{ route('site.company', ['slug' => $company['slug']]) }}" class="block h-full">
               <div class="bg-gray-50 hover:bg-blue-50 border border-gray-200 hover:border-blue-300 p-6 rounded-xl transition-all cursor-pointer group text-center h-full flex flex-col items-center justify-center min-h-[180px]">
-                <div class="w-full h-24 flex items-center justify-center mb-2">
-                  <div class="w-full h-full rounded-lg bg-white flex items-center justify-center border border-gray-200">
-                    <span class="text-xs font-semibold text-gray-600">
-                      {{ $company['name'] }}
-                    </span>
+                @if($companyLogoSrc)
+                  <div class="w-full h-24 flex items-center justify-center mb-2">
+                    <img
+                      src="{{ $companyLogoSrc }}"
+                      alt="{{ $company['name'] }}"
+                      class="max-w-full max-h-full object-contain"
+                    />
                   </div>
-                </div>
+                @else
+                  <div class="bg-white group-hover:bg-blue-100 w-16 h-16 rounded-xl flex items-center justify-center mb-4 transition-all">
+                    <x-site.lucide-icon
+                      :name="$company['icon'] ?? 'building2'"
+                      class="w-8 h-8 text-gray-600 group-hover:text-blue-600 transition-colors"
+                    />
+                  </div>
+                @endif
                 <h3 class="font-bold text-gray-900 group-hover:text-blue-600 transition-colors text-sm">
                   {{ $company['name'] }}
                 </h3>
               </div>
             </a>
-          </x-site.motion>
+          </div>
         @endforeach
       </div>
 
-      <x-site.motion class="text-center" variant="fade-up" :delay="400" :duration="800">
+      <div
+        class="site-companies-overview-cta text-center transition-[opacity,transform] duration-[800ms] ease-out will-change-[opacity,transform]"
+        style="transition-delay: 400ms"
+        :class="companiesInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'"
+      >
         <a
           href="{{ route('site.our-companies') }}"
-          class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-full text-lg font-semibold transition-all shadow-lg hover:shadow-xl inline-flex items-center gap-2"
+          class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-full text-lg font-semibold transition-all shadow-lg hover:shadow-xl inline-flex items-center justify-center gap-2"
         >
           View All Companies
-          <span>→</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0" aria-hidden="true">
+            <path d="M5 12h14" />
+            <path d="m12 5 7 7-7 7" />
+          </svg>
         </a>
-      </x-site.motion>
+      </div>
     </div>
   </section>
 

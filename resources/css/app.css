@@ -332,4 +332,21 @@
     transform: none !important;
     transition: none !important;
   }
+
+  [data-companies-overview] .site-companies-overview-header,
+  [data-companies-overview] .site-companies-overview-card,
+  [data-companies-overview] .site-companies-overview-cta {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  [data-careers-page] .site-careers-header,
+  [data-careers-page] .site-careers-why,
+  [data-careers-page] .site-careers-job,
+  [data-careers-page] .site-careers-cta {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
 }

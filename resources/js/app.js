@@ -7,6 +7,16 @@ Alpine.plugin(intersect);
 
 /** Home hero “Featured Company” — matches HomePage.tsx AnimatePresence mode="wait" (exit then enter, 500ms). */
 document.addEventListener('alpine:init', () => {
+  /** Careers — matches Careers.tsx useInView(once, margin -100px); skip animation if reduced motion. */
+  Alpine.data('careersPage', () => ({
+    careersInView: false,
+    init() {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        this.careersInView = true;
+      }
+    },
+  }));
+
   Alpine.data('heroSpotlight', (items) => ({
     items,
     idx: 0,
