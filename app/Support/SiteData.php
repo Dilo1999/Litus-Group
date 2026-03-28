@@ -19,6 +19,12 @@ class SiteData
         return asset('assets/logo/' . rawurlencode($basename));
     }
 
+    /** Header/footer brand mark — matches src/app/components/Navigation.tsx logo. */
+    public static function brandLogoUrl(): string
+    {
+        return self::companyLogoUrl('LITUS Group - logos_Artboard 1 - LITUS Group.png') ?? '';
+    }
+
     public static function companies(): array
     {
         return [

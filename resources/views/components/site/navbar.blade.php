@@ -35,14 +35,13 @@
   >
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex justify-between items-center h-20">
-        <a href="{{ route('site.home') }}" class="cursor-pointer site-logo-motion flex items-center gap-3 select-none">
-          <div class="h-12 aspect-[3/1] rounded-md bg-blue-600 flex items-center justify-center px-4">
-            <span class="text-white font-bold tracking-widest text-sm">LITUS</span>
-          </div>
-          <span
-            class="font-bold tracking-wide transition-colors duration-300"
-            :class="navSolid ? 'text-gray-900' : 'text-white'"
-          >Group</span>
+        <a href="{{ route('site.home') }}" class="cursor-pointer site-logo-motion flex items-center select-none shrink-0">
+          <img
+            src="{{ SiteData::brandLogoUrl() }}"
+            alt="LITUS Group"
+            class="h-14 md:h-16 w-auto transition-all duration-300"
+            :class="navSolid ? '' : 'brightness-0 invert'"
+          />
         </a>
 
         <div class="site-nav-links-stagger hidden lg:flex items-center space-x-8">

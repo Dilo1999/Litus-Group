@@ -1,23 +1,21 @@
 @props([
-  'variant' => 'dark', // dark | light
+  'variant' => 'dark', // dark | light — light = on dark bg (invert logo like Navigation on transparent header)
   'size' => 'md',      // sm | md | lg
 ])
 
 @php
+  use App\Support\SiteData;
+
   $sizes = [
-    'sm' => 'h-8',
+    'sm' => 'h-10',
     'md' => 'h-12',
-    'lg' => 'h-14',
+    'lg' => 'h-14 md:h-16',
   ];
-  $class = $sizes[$size] ?? $sizes['md'];
+  $h = $sizes[$size] ?? $sizes['md'];
 @endphp
 
-<div class="flex items-center gap-3 select-none">
-    <div class="{{ $class }} aspect-[3/1] rounded-md bg-blue-600 flex items-center justify-center px-4">
-        <span class="text-white font-bold tracking-widest text-sm">LITUS</span>
-    </div>
-    <span class="font-bold tracking-wide {{ $variant === 'light' ? 'text-white' : 'text-gray-900' }}">
-        Group
-    </span>
-</div>
-
+<img
+  src="{{ SiteData::brandLogoUrl() }}"
+  alt="LITUS Group"
+  {{ $attributes->merge(['class' => $h . ' w-auto transition-opacity duration-300 ' . ($variant === 'light' ? 'brightness-0 invert' : '')]) }}
+/>
