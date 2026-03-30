@@ -65,7 +65,10 @@ class SiteController extends Controller
     public function blogs()
     {
         return view('site.blogs', [
-            'events' => SiteData::galleryEvents(),
+            'title' => 'News & Media | LITUS Group',
+            'blogPosts' => SiteData::blogPosts(),
+            'blogCategories' => SiteData::blogCategories(),
+            'galleryEvents' => SiteData::galleryEvents(),
         ]);
     }
 
@@ -82,7 +85,9 @@ class SiteController extends Controller
 
     public function contact()
     {
-        return view('site.contact');
+        return view('site.contact', [
+            'title' => 'Contact Us | LITUS Group',
+        ]);
     }
 
     public function contactSubmit(Request $request)

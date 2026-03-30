@@ -25,6 +25,7 @@
     get navSolid() { return this.isScrolled || !this.isHome },
     _onResize: null,
     init() {
+      this.companiesOpen = false;
       const onScroll = () => { this.isScrolled = window.scrollY > 20 };
       onScroll();
       window.addEventListener('scroll', onScroll, { passive: true });
@@ -44,12 +45,12 @@
   }"
 >
   <nav
-    class="site-nav-motion fixed top-0 left-0 right-0 z-50 transition-all duration-300"
+    class="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
     :class="navSolid ? 'bg-white/95 backdrop-blur-md shadow-md' : 'bg-transparent'"
   >
     <div class="max-w-7xl mx-auto px-6 sm:px-6 lg:px-8">
       <div class="flex justify-between items-center h-20">
-        <a href="{{ route('site.home') }}" class="cursor-pointer site-logo-motion flex items-center select-none shrink-0">
+        <a href="{{ route('site.home') }}" class="cursor-pointer flex items-center select-none shrink-0">
           <img
             src="{{ SiteData::brandLogoUrl() }}"
             alt="LITUS Group"
@@ -58,7 +59,7 @@
           />
         </a>
 
-        <div class="site-nav-links-stagger hidden lg:flex items-center space-x-8">
+        <div class="hidden lg:flex items-center space-x-8">
           @foreach($navItems as $item)
             @if(!empty($item['dropdown']))
               <div
@@ -70,6 +71,7 @@
                   href="{{ route($item['route']) }}"
                   class="transition-colors font-medium flex items-center gap-1"
                   :class="navSolid ? 'text-gray-700 hover:text-blue-600' : 'text-white hover:text-blue-300'"
+                  @click="companiesOpen = false"
                 >
                   {{ $item['label'] }}
                   <svg class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -77,33 +79,50 @@
                   </svg>
                 </a>
 
-                <div
-                  x-show="companiesOpen"
-                  x-transition:enter="transition ease-out duration-200"
-                  x-transition:enter-start="opacity-0 -translate-y-2"
-                  x-transition:enter-end="opacity-100 translate-y-0"
-                  x-transition:leave="transition ease-in duration-150"
-                  x-transition:leave-start="opacity-100 translate-y-0"
-                  x-transition:leave-end="opacity-0 -translate-y-2"
-                  class="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-[600px] bg-white rounded-2xl shadow-2xl border border-gray-100 p-8"
-                >
+                {{-- pt-2 bridges the gap so :hover isn’t lost between trigger and panel; x-cloak hides until Alpine runs --}}
+                <div class="absolute left-1/2 top-full z-[60] flex -translate-x-1/2 justify-center pt-2">
+                  <div
+                    x-show="companiesOpen"
+                    x-cloak
+                    x-transition:enter="transition ease-out duration-200"
+                    x-transition:enter-start="opacity-0 -translate-y-2"
+                    x-transition:enter-end="opacity-100 translate-y-0"
+                    x-transition:leave="transition ease-in duration-150"
+                    x-transition:leave-start="opacity-100 translate-y-0"
+                    x-transition:leave-end="opacity-0 -translate-y-2"
+                    class="w-[600px] bg-white rounded-2xl shadow-2xl border border-gray-100 p-8"
+                  >
                   <div class="grid grid-cols-2 gap-x-8 gap-y-4">
                     @foreach($companies as $company)
-                      <a href="{{ route('site.company', ['slug' => $company['slug']]) }}" class="block">
+                      @php
+                        $logoSrc = SiteData::companyLogoUrl($company['logo'] ?? null);
+                      @endphp
+                      <a
+                        href="{{ route('site.company', ['slug' => $company['slug']]) }}"
+                        class="block"
+                        @click="companiesOpen = false"
+                      >
                         <div class="flex items-center gap-3 px-4 py-3 text-left text-gray-700 hover:bg-gray-50 rounded-lg transition-colors group w-full">
-                          <div class="w-16 h-8 flex items-center justify-center flex-shrink-0">
-                            <div class="w-full h-full rounded bg-gray-100 flex items-center justify-center">
-                              <span class="text-[10px] font-semibold text-gray-600">
-                                {{ strtoupper(substr($company['name'], 0, 8)) }}
-                              </span>
+                          @if($logoSrc)
+                            <div class="w-16 h-8 flex shrink-0 items-center justify-center">
+                              <img
+                                src="{{ $logoSrc }}"
+                                alt=""
+                                class="max-h-full max-w-full object-contain object-left"
+                              />
                             </div>
-                          </div>
+                          @else
+                            <div class="flex h-8 w-16 shrink-0 items-center justify-center text-gray-400 group-hover:text-blue-600 [&_svg]:size-6">
+                              <x-site.lucide-icon :name="$company['icon'] ?? 'building2'" />
+                            </div>
+                          @endif
                           <span class="font-medium group-hover:text-blue-600 transition-colors text-sm">
                             {{ $company['name'] }}
                           </span>
                         </div>
                       </a>
                     @endforeach
+                  </div>
                   </div>
                 </div>
               </div>
@@ -112,6 +131,7 @@
                 href="{{ route($item['route']) }}"
                 class="transition-colors font-medium"
                 :class="navSolid ? 'text-gray-700 hover:text-blue-600' : 'text-white hover:text-blue-300'"
+                @click="companiesOpen = false"
               >
                 {{ $item['label'] }}
               </a>

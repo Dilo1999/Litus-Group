@@ -149,18 +149,7 @@
   }
 }
 
-/* Page / nav motion (parity with reference motion/react timings) */
-@keyframes site-nav-enter {
-  from {
-    transform: translateY(-100%);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
+/* Page motion (reference timings) */
 @keyframes site-fade-in {
   from {
     opacity: 0;
@@ -191,14 +180,6 @@
   }
 }
 
-.site-nav-motion {
-  animation: site-nav-enter 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-.site-logo-motion {
-  animation: site-fade-in 0.6s ease-out 0.2s both;
-}
-
 .site-hero-title {
   animation: site-fade-in-up 0.8s ease-out 0.2s both;
 }
@@ -223,6 +204,11 @@
   animation: site-scroll-dot-bounce 2s ease-in-out infinite;
 }
 
+/* Blogs / News & Media hero — BlogsPage.tsx HeroSection motion (y 30, 0.8s) */
+.site-blogs-hero {
+  animation: site-fade-in-up 0.8s ease-out both;
+}
+
 /* Our Companies: PageHero — on load (not scroll), matches reference initial: y 30, 0.8s */
 .site-our-companies-hero {
   animation: site-fade-in-up 0.8s ease-out both;
@@ -233,47 +219,7 @@
   animation: site-fade-in-up 0.8s ease-out both;
 }
 
-@keyframes site-nav-link-in {
-  from {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.site-nav-links-stagger > a,
-.site-nav-links-stagger > div {
-  animation: site-nav-link-in 0.5s ease-out both;
-}
-
-.site-nav-links-stagger > *:nth-child(1) {
-  animation-delay: 0.05s;
-}
-.site-nav-links-stagger > *:nth-child(2) {
-  animation-delay: 0.1s;
-}
-.site-nav-links-stagger > *:nth-child(3) {
-  animation-delay: 0.15s;
-}
-.site-nav-links-stagger > *:nth-child(4) {
-  animation-delay: 0.2s;
-}
-.site-nav-links-stagger > *:nth-child(5) {
-  animation-delay: 0.25s;
-}
-.site-nav-links-stagger > *:nth-child(6) {
-  animation-delay: 0.3s;
-}
-.site-nav-links-stagger > *:nth-child(7) {
-  animation-delay: 0.35s;
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .site-nav-motion,
-  .site-logo-motion,
   .site-hero-title,
   .site-hero-lead,
   .site-hero-card,
@@ -281,9 +227,7 @@
   .site-scroll-indicator,
   .site-scroll-indicator__mouse,
   .site-our-companies-hero,
-  .site-company-hero,
-  .site-nav-links-stagger > a,
-  .site-nav-links-stagger > div {
+  .site-company-hero {
     animation: none !important;
   }
 
@@ -354,6 +298,37 @@
   [data-careers-page] .site-careers-why,
   [data-careers-page] .site-careers-job,
   [data-careers-page] .site-careers-cta {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  [data-contact-page] .site-contact-header,
+  [data-contact-page] .site-contact-left,
+  [data-contact-page] .site-contact-form {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  [data-contact-page] .site-contact-map {
+    opacity: 1 !important;
+    transition: none !important;
+  }
+
+  .site-blogs-hero {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  [data-blogs-page] .site-blogs-filter-search,
+  [data-blogs-page] .site-blogs-filter-cats,
+  [data-blogs-page] .site-blogs-featured,
+  [data-blogs-page] .site-blogs-card,
+  [data-blogs-page] .site-blogs-pagination,
+  [data-blogs-page] .site-blogs-gallery-head,
+  [data-blogs-page] .site-blogs-gallery-item {
     opacity: 1 !important;
     transform: none !important;
     transition: none !important;
