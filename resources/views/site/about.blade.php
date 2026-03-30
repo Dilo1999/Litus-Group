@@ -16,7 +16,12 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div
         class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
-        x-data="{ inView: false }"
+        x-data="{
+          inView: false,
+          init() {
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) this.inView = true;
+          }
+        }"
         x-intersect.once.margin.-100px.-100px.-100px.-100px="inView = true"
         data-about-hero
       >
@@ -94,7 +99,15 @@
   {{-- Vision & Mission: visionRef on Mission card only; both use visionInView --}}
   <section class="py-24 bg-blue-600">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-12" x-data="{ visionInView: false }">
+      <div
+        class="grid grid-cols-1 md:grid-cols-2 gap-12"
+        x-data="{
+          visionInView: false,
+          init() {
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) this.visionInView = true;
+          }
+        }"
+      >
         <div
           x-intersect.once.margin.-100px.-100px.-100px.-100px="visionInView = true"
           class="site-about-motion-mission bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-8 transition-[opacity,transform] duration-[800ms] ease-out will-change-[opacity,transform]"

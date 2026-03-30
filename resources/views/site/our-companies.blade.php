@@ -30,8 +30,13 @@
 {{-- CompaniesByDivision: single inView gate, stagger division 100ms, card 50ms (reference parity) --}}
 <section
   class="py-24 bg-white"
-  x-data="{ inView: false }"
-  x-intersect.once="inView = true"
+  x-data="{
+    inView: false,
+    init() {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) this.inView = true;
+    }
+  }"
+  x-intersect.once.margin.-100px.-100px.-100px.-100px="inView = true"
   data-companies-stagger
 >
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

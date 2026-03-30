@@ -11,7 +11,12 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div
         class="site-team-motion-header text-center mb-16 transition-[opacity,transform] duration-[800ms] ease-out will-change-[opacity,transform]"
-        x-data="{ inView: false }"
+        x-data="{
+          inView: false,
+          init() {
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) this.inView = true;
+          }
+        }"
         x-intersect.once.margin.-100px.-100px.-100px.-100px="inView = true"
         :class="inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-[50px]'"
       >
@@ -28,7 +33,12 @@
           <div
             class="site-team-motion-card flex flex-col transition-[opacity,transform] duration-[800ms] ease-out will-change-[opacity,transform]"
             style="transition-delay: {{ $index * 100 }}ms"
-            x-data="{ cardInView: false }"
+            x-data="{
+              cardInView: false,
+              init() {
+                if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) this.cardInView = true;
+              }
+            }"
             x-intersect.once.margin.-100px.-100px.-100px.-100px="cardInView = true"
             :class="cardInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-[50px]'"
           >

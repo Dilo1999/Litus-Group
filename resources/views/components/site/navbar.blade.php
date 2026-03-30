@@ -50,7 +50,7 @@
   >
     <div class="max-w-7xl mx-auto px-6 sm:px-6 lg:px-8">
       <div class="flex justify-between items-center h-20">
-        <a href="{{ route('site.home') }}" class="cursor-pointer flex items-center select-none shrink-0">
+        <a href="{{ route('site.home') }}" class="cursor-pointer flex select-none items-center shrink-0">
           <img
             src="{{ SiteData::brandLogoUrl() }}"
             alt="LITUS Group"
@@ -127,14 +127,16 @@
                 </div>
               </div>
             @else
-              <a
-                href="{{ route($item['route']) }}"
-                class="transition-colors font-medium"
-                :class="navSolid ? 'text-gray-700 hover:text-blue-600' : 'text-white hover:text-blue-300'"
-                @click="companiesOpen = false"
-              >
-                {{ $item['label'] }}
-              </a>
+              <div>
+                <a
+                  href="{{ route($item['route']) }}"
+                  class="transition-colors font-medium"
+                  :class="navSolid ? 'text-gray-700 hover:text-blue-600' : 'text-white hover:text-blue-300'"
+                  @click="companiesOpen = false"
+                >
+                  {{ $item['label'] }}
+                </a>
+              </div>
             @endif
           @endforeach
         </div>

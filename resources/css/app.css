@@ -214,9 +214,9 @@
   animation: site-fade-in-up 0.8s ease-out both;
 }
 
-/* Company detail hero — matches CompanyPage CompanyHero initial motion */
+/* Company detail hero — CompanyPage.tsx CompanyHero: initial y 30, transition duration 0.8 */
 .site-company-hero {
-  animation: site-fade-in-up 0.8s ease-out both;
+  animation: site-fade-in-up 0.8s cubic-bezier(0.4, 0, 0.2, 1) both;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -229,6 +229,12 @@
   .site-our-companies-hero,
   .site-company-hero {
     animation: none !important;
+  }
+
+  [data-home-mission-vision] > div {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
   }
 
   .site-our-companies-hero {

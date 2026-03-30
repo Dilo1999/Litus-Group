@@ -57,11 +57,11 @@
             class="flex items-center justify-between gap-4 min-h-[3.25rem]"
           >
             <div class="min-w-0">
-              <div class="text-sm text-blue-200 mb-1">Featured Company</div>
+              <!-- <div class="text-sm text-blue-200 mb-1">Featured Company</div> -->
               <div class="text-2xl font-bold text-white" x-text="items[idx].company"></div>
             </div>
             <a
-              class="flex shrink-0 items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-full font-semibold transition-all"
+              class="flex shrink-0 items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-full text-sm font-semibold transition-all"
               :href="'tel:' + items[idx].hotline"
             >
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0" aria-hidden="true">
@@ -101,7 +101,17 @@
   </section>
 
   {{-- CompaniesOverview — matches HomePage.tsx (single useInView ref on header, shared isInView for grid + CTA) --}}
-  <section id="companies" class="py-24 bg-white" data-companies-overview x-data="{ companiesInView: false }">
+  <section
+    id="companies"
+    class="py-24 bg-white"
+    data-companies-overview
+    x-data="{
+      companiesInView: false,
+      init() {
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) this.companiesInView = true;
+      }
+    }"
+  >
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div
         class="site-companies-overview-header text-center mb-16 transition-[opacity,transform] duration-[800ms] ease-out will-change-[opacity,transform]"
@@ -203,25 +213,39 @@
     </div>
   </section>
 
+  {{-- MissionVision: single useInView ref on Mission card (HomePage.tsx) --}}
   <section class="py-24 bg-blue-600">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-        <x-site.motion variant="fade-up" :duration="800">
-          <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-8">
-            <h3 class="text-3xl font-bold text-white mb-4">Our Mission</h3>
-            <p class="text-lg text-blue-100 leading-relaxed">
-              To deliver exceptional value across diverse industries through innovation, quality, and unwavering commitment to customer satisfaction.
-            </p>
-          </div>
-        </x-site.motion>
-        <x-site.motion variant="fade-up" :delay="200" :duration="800">
-          <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-8">
-            <h3 class="text-3xl font-bold text-white mb-4">Our Vision</h3>
-            <p class="text-lg text-blue-100 leading-relaxed">
-              To be the most trusted and diversified business group in the Maldives, setting industry standards and creating sustainable value for all stakeholders.
-            </p>
-          </div>
-        </x-site.motion>
+      <div
+        class="grid grid-cols-1 md:grid-cols-2 gap-12"
+        data-home-mission-vision
+        x-data="{
+          mvInView: false,
+          init() {
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) this.mvInView = true;
+          }
+        }"
+      >
+        <div
+          x-intersect.once.margin.-100px.-100px.-100px.-100px="mvInView = true"
+          class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-8 transition-[opacity,transform] duration-[800ms] ease-out will-change-[opacity,transform]"
+          :class="mvInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-[50px]'"
+        >
+          <h3 class="text-3xl font-bold text-white mb-4">Our Mission</h3>
+          <p class="text-lg text-blue-100 leading-relaxed">
+            To deliver exceptional value across diverse industries through innovation, quality, and unwavering commitment to customer satisfaction.
+          </p>
+        </div>
+        <div
+          class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-8 transition-[opacity,transform] duration-[800ms] ease-out will-change-[opacity,transform]"
+          style="transition-delay: 200ms"
+          :class="mvInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-[50px]'"
+        >
+          <h3 class="text-3xl font-bold text-white mb-4">Our Vision</h3>
+          <p class="text-lg text-blue-100 leading-relaxed">
+            To be the most trusted and diversified business group in the Maldives, setting industry standards and creating sustainable value for all stakeholders.
+          </p>
+        </div>
       </div>
     </div>
   </section>
@@ -321,13 +345,13 @@
   <section class="py-12 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
-        <x-site.motion class="flex-1" variant="fade-left" :duration="800">
+        <x-site.motion class="flex-1" variant="fade-left-sm" :duration="800">
           <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">Let's Connect</h2>
           <p class="text-xl text-gray-600 leading-relaxed">
             Have questions or interested in our services? Get in touch with us today
           </p>
         </x-site.motion>
-        <x-site.motion class="flex-shrink-0" variant="fade-right" :delay="200" :duration="800">
+        <x-site.motion class="flex-shrink-0" variant="fade-right-sm" :delay="200" :duration="800">
           <a
             href="{{ route('site.contact') }}"
             class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-full text-lg font-semibold transition-all shadow-lg hover:shadow-xl inline-flex items-center gap-2"

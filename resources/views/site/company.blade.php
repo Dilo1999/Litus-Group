@@ -57,13 +57,33 @@
     </div>
   </section>
 
-  {{-- AboutCompany — useInView on left column, margin -100px --}}
-  <section class="py-24 bg-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center" x-data="{ aboutInView: false }">
+  {{-- AboutCompany — useInView(ref on left in TS); Alpine: intersect on grid + x-data (same node) + init viewport check so reveal always runs --}}
+  <section class="overflow-x-clip bg-white py-24">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div
+        class="grid grid-cols-1 items-center gap-12 lg:grid-cols-2"
+        x-data="{
+          aboutInView: false,
+          init() {
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+              this.aboutInView = true;
+              return;
+            }
+            queueMicrotask(() => {
+              const el = this.$el;
+              if (!(el instanceof Element)) return;
+              const r = el.getBoundingClientRect();
+              const vh = window.innerHeight || document.documentElement.clientHeight;
+              if (r.top < vh && r.bottom > 0) {
+                this.aboutInView = true;
+              }
+            });
+          },
+        }"
+        x-intersect.once.margin.-100px.-100px.-100px.-100px="aboutInView = true"
+      >
         <div
-          class="site-company-motion-about-left transition-[opacity,transform] duration-[800ms] ease-out will-change-[opacity,transform]"
-          x-intersect.once.margin.-100px.-100px.-100px.-100px="aboutInView = true"
+          class="site-company-motion-about-left will-change-[opacity,transform] transition-[opacity,transform] duration-[800ms] ease-[cubic-bezier(0.4,0,0.2,1)]"
           :class="aboutInView ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-[50px]'"
         >
           <div class="inline-block px-4 py-2 bg-blue-50 text-blue-600 rounded-full text-sm font-medium mb-4">
@@ -81,7 +101,7 @@
         </div>
 
         <div
-          class="site-company-motion-about-right relative transition-[opacity,transform] duration-[800ms] ease-out will-change-[opacity,transform]"
+          class="site-company-motion-about-right relative will-change-[opacity,transform] transition-[opacity,transform] duration-[800ms] ease-[cubic-bezier(0.4,0,0.2,1)]"
           style="transition-delay: 200ms"
           :class="aboutInView ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-[50px]'"
         >
@@ -98,10 +118,18 @@
   </section>
 
   {{-- ServicesSection — ref on header; cards share isInView + stagger --}}
-  <section class="py-24 bg-gray-50" x-data="{ servicesInView: false }">
+  <section
+    class="py-24 bg-gray-50"
+    x-data="{
+      servicesInView: false,
+      init() {
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) this.servicesInView = true;
+      }
+    }"
+  >
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div
-        class="site-company-motion-services-header text-center mb-16 transition-[opacity,transform] duration-[800ms] ease-out will-change-[opacity,transform]"
+        class="site-company-motion-services-header text-center mb-16 transition-[opacity,transform] duration-[800ms] ease-[cubic-bezier(0.4,0,0.2,1)] will-change-[opacity,transform]"
         x-intersect.once.margin.-100px.-100px.-100px.-100px="servicesInView = true"
         :class="servicesInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-[50px]'"
       >
@@ -117,14 +145,17 @@
             $svcIcon = \App\Support\CompanyPageIcons::serviceIcon($service);
           @endphp
           <div
-            class="site-company-motion-service-card bg-white border border-gray-200 rounded-xl p-6 hover:border-blue-300 hover:shadow-lg transition-[opacity,transform,border-color,box-shadow] duration-500 ease-out will-change-[opacity,transform]"
+            class="site-company-motion-service-card h-full transition-[opacity,transform] duration-[500ms] ease-[cubic-bezier(0.4,0,0.2,1)] will-change-[opacity,transform]"
             style="transition-delay: {{ $index * 100 }}ms"
             :class="servicesInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-[30px]'"
           >
-            <div class="bg-blue-100 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
-              <x-site.lucide-icon :name="$svcIcon" class="w-6 h-6 text-blue-600" />
+            {{-- Inner card: hover matches motion.div transition-all in CompanyPage.tsx (separate from 0.5s layout tween) --}}
+            <div class="h-full rounded-xl border border-gray-200 bg-white p-6 transition-all hover:border-blue-300 hover:shadow-lg">
+              <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-blue-100">
+                <x-site.lucide-icon :name="$svcIcon" class="h-6 w-6 text-blue-600" />
+              </div>
+              <h3 class="text-lg font-bold text-gray-900">{{ $service }}</h3>
             </div>
-            <h3 class="text-lg font-bold text-gray-900">{{ $service }}</h3>
           </div>
         @endforeach
       </div>
@@ -132,10 +163,18 @@
   </section>
 
   {{-- WhyChoose --}}
-  <section class="py-24 bg-white" x-data="{ whyInView: false }">
+  <section
+    class="py-24 bg-white"
+    x-data="{
+      whyInView: false,
+      init() {
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) this.whyInView = true;
+      }
+    }"
+  >
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div
-        class="site-company-motion-why-header text-center mb-16 transition-[opacity,transform] duration-[800ms] ease-out will-change-[opacity,transform]"
+        class="site-company-motion-why-header text-center mb-16 transition-[opacity,transform] duration-[800ms] ease-[cubic-bezier(0.4,0,0.2,1)] will-change-[opacity,transform]"
         x-intersect.once.margin.-100px.-100px.-100px.-100px="whyInView = true"
         :class="whyInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-[50px]'"
       >
@@ -153,7 +192,7 @@
             $strIcon = \App\Support\CompanyPageIcons::strengthIcon($strength);
           @endphp
           <div
-            class="site-company-motion-why-card text-center transition-[opacity,transform] duration-500 ease-out will-change-[opacity,transform]"
+            class="site-company-motion-why-card text-center transition-[opacity,transform] duration-[500ms] ease-[cubic-bezier(0.4,0,0.2,1)] will-change-[opacity,transform]"
             style="transition-delay: {{ $index * 100 }}ms"
             :class="whyInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-[30px]'"
           >
@@ -170,9 +209,17 @@
   {{-- ContactSection — ref on left column --}}
   <section class="py-24 bg-gray-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12" x-data="{ contactInView: false }">
+      <div
+        class="grid grid-cols-1 lg:grid-cols-2 gap-12"
+        x-data="{
+          contactInView: false,
+          init() {
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) this.contactInView = true;
+          }
+        }"
+      >
         <div
-          class="site-company-motion-contact-left transition-[opacity,transform] duration-[800ms] ease-out will-change-[opacity,transform]"
+          class="site-company-motion-contact-left transition-[opacity,transform] duration-[800ms] ease-[cubic-bezier(0.4,0,0.2,1)] will-change-[opacity,transform]"
           x-intersect.once.margin.-100px.-100px.-100px.-100px="contactInView = true"
           :class="contactInView ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-[50px]'"
         >
@@ -216,7 +263,7 @@
         </div>
 
         <div
-          class="site-company-motion-contact-right transition-[opacity,transform] duration-[800ms] ease-out will-change-[opacity,transform]"
+          class="site-company-motion-contact-right transition-[opacity,transform] duration-[800ms] ease-[cubic-bezier(0.4,0,0.2,1)] will-change-[opacity,transform]"
           style="transition-delay: 200ms"
           :class="contactInView ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-[50px]'"
         >
